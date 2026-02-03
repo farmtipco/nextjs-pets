@@ -30,7 +30,7 @@ export default function Chat() {
   useEffect(() => {
     if (messageLog.length) {
       chatLogElement.current.scrollTop = chatLogElement.current.scrollHeight
-      if (!isCharOpen) {
+      if (!isChatOpen) {
         setUnreadCount(prev => prev + 1)
       }
     }
@@ -57,14 +57,14 @@ export default function Chat() {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ message: userMessage, socket_id: socketId })
+      body: JSON.stringify({ message: userMessage.trim(), socket_id: socketId })
     })
-    setMessageLog(prev => [...prev, { selfMessage: true, message: userMessage }])
+    setMessageLog(prev => [...prev, { selfMessage: true, message: userMessage.trim() }])
     setUserMessage("")
   }
 
   function haldleInputChange(e) {
-    setUserMessage(e.target.value.trim())
+    setUserMessage(e.target.value)
   }
 
   return (
